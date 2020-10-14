@@ -5,9 +5,9 @@ import * as actions from './actions';
 const RickAndMortyStore = {
     namespaced: true,
     state: {
-        locations : [],
-        episodes  : [],
-        characters: []
+        locations : {},
+        episodes  : {},
+        characters: {}
     },
     getters,
     mutations,
