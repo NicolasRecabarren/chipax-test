@@ -1,0 +1,111 @@
+<template>
+    <b-overlay :show="showOverlay" rounded="sm" spinner-variant="success">
+        <div class="box-shadow">
+            <div class="box-body">
+                <h2><span>{{cantChar}}</span></h2>
+                <h5>Veces</h5>
+                Ha aparecido la letra "{{counter.charToCount.toUpperCase()}}".
+            </div>
+
+            <div class="box-footer">
+                <b-button
+                    :class="visible ? null : 'collapsed'"
+                    :aria-expanded="visible ? 'true' : 'false'"
+                    :aria-controls="'collapse-'+counter.type"
+                    @click="visible = !visible"
+                    block>
+                    Ver ocurrencias
+                </b-button>
+                <b-collapse :id="'collapse-'+counter.type" class="mt-2" v-model="visible">
+                    <ul>
+                        <li v-for="element in results" :key="element.id">{{element.name}}</li>
+                    </ul>
+                </b-collapse>
+            </div>
+        </div>
+    </b-overlay>
+</template>
+
+<script>
+import { mapActions } from 'vuex';
+
+export default {
+    props: ['counter'],
+
+    data(){
+        return {
+            cantChar: 0,
+            results: [],
+            showOverlay: true,
+            visible: false,
+            time: 0,
+        }
+    },
+
+    created(){
+        let typeRequest = "Characters";
+        if(this.counter.type === "episode")
+            typeRequest = "Episodes";
+        if(this.counter.type === "location")
+            typeRequest = "Locations";
+
+        this[`rickandmorty/get${typeRequest}API`]().then(response => {
+            if(response.ok){
+                this.results = response.body.results
+                
+                this.cantChar = this.results
+                        .map(({name}) => name)
+                        .join(',')
+                        .split(this.counter.charToCount)
+                        .length;
+                
+                this.showOverlay = false;
+            }
+        });
+    },
+
+    methods: {
+        ...mapActions([
+            'rickandmorty/getCharactersAPI',
+            'rickandmorty/getEpisodesAPI',
+            'rickandmorty/getLocationsAPI'
+        ])
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+    .box-shadow{
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 3px 6px #00000029;
+        border-radius: 5px;
+        padding: 20px;
+        .box-body{
+            > h2, > h5{
+                text-align: center;
+            }
+            > h2 > span{
+                border-radius: 50%;
+                background-color: #34C38F;
+                padding: 10px;
+            }
+        }
+        .box-footer{
+            max-height: 200px;
+            overflow-y: hidden;
+            .btn{
+                margin-top: 15px;
+            }
+            .collapse{
+                ul{
+                    max-height: 200px;
+                    overflow-y: auto;
+                    padding-left: 10px;
+                    li{
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+    }
+</style>
