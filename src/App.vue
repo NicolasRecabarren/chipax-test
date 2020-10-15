@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <div class="background-overlay"></div>
     <NavBar />
     <div class="container">
       <Home />
@@ -23,10 +22,7 @@ export default {
 
 <style lang="scss">
   body{
-    /*background-color: #F5F6F8;*/
-    /*background-image: url(/img/background-rickandmorty.jpg);*/
-    background-image: url(/img/background-image.jpg);
-    background-size: cover;
+    background-color: #F5F6F8;
   }
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -38,15 +34,11 @@ export default {
     > .container{
       z-index: 10;
       position: relative;
-    }
-    > .background-overlay{
-      position: fixed;
-      background-color: #FFF;
-      opacity: 0.75;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
+      .box-shadow{
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 3px 6px #00000029;
+        border-radius: 5px;
+      }
     }
   }
 </style>
