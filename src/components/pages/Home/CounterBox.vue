@@ -4,19 +4,19 @@
             <div class="box-body">
                 <h2><span>{{cantChar}}</span></h2>
                 <h5>Veces</h5>
-                Ha aparecido la letra "{{counter.charToCount.toUpperCase()}}".
+                Ha aparecido la letra "{{counter.charToCount.toUpperCase()}}" en todos los <b>{{counter.type}}</b>.
             </div>
 
             <div class="box-footer">
                 <b-button
-                    :class="visible ? null : 'collapsed'"
-                    :aria-expanded="visible ? 'true' : 'false'"
+                    :class="showOcurrences ? null : 'collapsed'"
+                    :aria-expanded="showOcurrences ? 'true' : 'false'"
                     :aria-controls="'collapse-'+counter.type"
-                    @click="visible = !visible"
+                    @click="showOcurrences = !showOcurrences"
                     block>
                     Ver ocurrencias
                 </b-button>
-                <b-collapse :id="'collapse-'+counter.type" class="mt-2" v-model="visible">
+                <b-collapse :id="'collapse-'+counter.type" class="mt-2" v-model="showOcurrences">
                     <ul>
                         <li v-for="element in results" :key="element.id">{{element.name}}</li>
                     </ul>
@@ -37,7 +37,7 @@ export default {
             cantChar: 0,
             results: [],
             showOverlay: true,
-            visible: false,
+            showOcurrences: false,
             time: 0,
         }
     },
@@ -51,7 +51,7 @@ export default {
 
         this[`rickandmorty/get${typeRequest}API`]().then(response => {
             if(response.ok){
-                this.results = response.body.results
+                this.results = response.body.results.filter( ({name}) => name.includes(this.counter.charToCount))
                 
                 this.cantChar = this.results
                         .map(({name}) => name)
@@ -80,13 +80,16 @@ export default {
         box-shadow: 0px 3px 6px #00000029;
         border-radius: 5px;
         padding: 20px;
+        max-height: 350px;
         .box-body{
             > h2, > h5{
                 text-align: center;
             }
             > h2 > span{
                 border-radius: 50%;
-                background-color: #34C38F;
+                background-color: #42B883;
+                /*background-color: #F4EF32;*/
+                /*background-color: #FFD266;*/
                 padding: 10px;
             }
         }
@@ -98,7 +101,7 @@ export default {
             }
             .collapse{
                 ul{
-                    max-height: 200px;
+                    max-height: 135px;
                     overflow-y: auto;
                     padding-left: 10px;
                     li{
