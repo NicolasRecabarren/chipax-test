@@ -76,9 +76,6 @@ export default {
 
 <style lang="scss" scoped>
     .box-shadow{
-        background: #FFFFFF 0% 0% no-repeat padding-box;
-        box-shadow: 0px 3px 6px #00000029;
-        border-radius: 5px;
         padding: 20px;
         max-height: 350px;
         .box-body{
