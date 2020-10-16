@@ -11,7 +11,7 @@
         <section>
             <h2>Episode Locations</h2>
             <ul class="episodes row">
-                <Episode v-for="episode in this['rickandmorty/getEpisodes'].results" :key="episode.id" :episode="episode" />
+                <Episode v-for="episode in this['rickandmorty/getEpisodes']" :key="episode.id" :episode="episode" />
             </ul>
         </section>
     </div>
@@ -32,9 +32,9 @@ export default {
     data(){
         return {
             counters: [
-                {type: "character", charToCount: "c"},
-                {type: "episode"  , charToCount: "e"},
-                {type: "location" , charToCount: "l"},
+                {type: "character", charToCount: "c", getter: "getCharacters", mutation: "SET_CHARACTERS"},
+                {type: "episode"  , charToCount: "e", getter: "getEpisodes"  , mutation: "SET_EPISODES"  },
+                {type: "location" , charToCount: "l", getter: "getLocations" , mutation: "SET_LOCATIONS" }
             ]
         }
     },
