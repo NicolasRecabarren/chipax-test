@@ -1,24 +1,22 @@
 # chipax-test
 
-## Project setup
+## Project Description
+This project was developed as a test to apply for Chipax, this is a challenge named Rick And Morty.
+
+## Installation
+
+First, you must install dependencies with NPM.
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+Then, to run project as local mode, copy ".env" file and paste it in the same directory as ".env.local".
+Finally, run the command below:
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+npm run dev:local
 ```
 
 ### Lints and fixes files
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
